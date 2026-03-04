@@ -1,12 +1,13 @@
 # Project State
 
 ## Current Status
-**Phase**: 01 - Project Setup & Infrastructure (In Progress)
-**Current Plan**: 2 of 5
+**Phase**: 02 - Class Management Initial Setup (In Progress)
+**Current Plan**: 2 of 3
 **Last Updated**: 2026-03-04
 
 ## Progress
-**Phase 01**: ████░░░░░░░░░░░░░░░░ 20% (1/5 plans)
+**Phase 01**: █████████████████████ 100% (1/1 plans - Complete)
+**Phase 02**: ███████░░░░░░░░░░░░░░ 33% (1/3 plans)
 
 ## Project Initialization
 - ✅ Git repository initialized
@@ -14,6 +15,7 @@
 - ✅ REQUIREMENTS.md created with detailed functional specs
 - ✅ ROADMAP.md created with 13-phase implementation plan
 - ✅ Phase 01 plans created (5 plans)
+- ✅ Phase 02 plans created (3 plans)
 
 ## Recent Work
 - ✅ **Plan 01-01 Complete**: Initialize Next.js 15 Frontend Framework
@@ -21,22 +23,37 @@
   - Tailwind CSS v4 with PostCSS
   - shadcn/ui component library with button test
   - Environment variable template created
+- ✅ **Plan 02-01 Complete**: Class Management Foundation
+  - Zod validation schemas with TypeScript types
+  - Unique class code generator using nanoid
+  - Database seed file for 6 initial classes
+  - Auto-fixed Zod v4 API compatibility issue
 
 ## Next Actions
-1. Execute Plan 01-02: Setup Supabase backend infrastructure
-2. Continue Phase 1 implementation
+1. Execute Plan 02-02: Create Server Actions for class CRUD operations
+2. Continue Phase 2 implementation
 
 ## Configuration
 - **Tech Stack**: Next.js, TypeScript, Supabase, Vercel
 - **UI Framework**: shadcn/ui (installed)
 - **Database**: Supabase (PostgreSQL)
 - **Hosting**: Vercel with GitHub integration
+- **Validation**: Zod v4
+- **Code Generation**: nanoid
+- **Maps**: React Leaflet + Leaflet
 
 ## Project Context
-- **Lecturer**: Managing 6 classes (4 Bachelor, 2 Master)
+- **Lecturer**: Managing 6 classes (3 Bachelor, 3 Master)
 - **Semester**: Semester 2 2025/2026
 - **Primary Goal**: Centralized attendance management with location verification
 - **Key Features**: Manual activation, retroactive access, dashboard analytics, downloadable reports
+
+## Decisions Made
+- Used Zod v4 API with direct message parameter for enum validation
+- Implemented 8-character class codes excluding ambiguous characters (0/O, 1/I)
+- Set location fields as nullable to support optional configuration during class creation
+- Default location radius set to 50 meters as reasonable initial geofence
+- Used ON CONFLICT DO NOTHING in seed.sql for safe multiple seed runs
 
 ## Notes
 - No student authentication required for MVP
