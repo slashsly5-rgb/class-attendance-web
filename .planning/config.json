@@ -1,0 +1,17 @@
+{
+  "version": "1.0.0",
+  "project_name": "Class Attendance System",
+  "created": "2026-03-04",
+  "workflow": {
+    "commit_docs": true,
+    "auto_research": false,
+    "verify_plans": true
+  },
+  "models": {
+    "researcher": "sonnet",
+    "synthesizer": "sonnet",
+    "roadmapper": "sonnet",
+    "planner": "sonnet",
+    "executor": "sonnet"
+  }
+}
