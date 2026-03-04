@@ -1,12 +1,12 @@
 -- Source: https://supabase.com/docs/guides/database/postgres/indexes
 -- supabase/migrations/20260304000001_create_initial_schema.sql
 
--- Enable UUID extension
-CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+-- Enable pgcrypto extension for gen_random_uuid()
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- Classes table
 CREATE TABLE classes (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
   code TEXT UNIQUE NOT NULL,
   degree_level TEXT NOT NULL CHECK (degree_level IN ('Bachelor', 'Master')),
@@ -19,7 +19,7 @@ CREATE TABLE classes (
 
 -- Students table
 CREATE TABLE students (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   student_id TEXT UNIQUE NOT NULL,
   full_name TEXT NOT NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
@@ -27,7 +27,7 @@ CREATE TABLE students (
 
 -- Class enrollments (many-to-many)
 CREATE TABLE enrollments (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   class_id UUID NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
   student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
   enrolled_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -36,7 +36,7 @@ CREATE TABLE enrollments (
 
 -- Attendance sessions
 CREATE TABLE attendance_sessions (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   class_id UUID NOT NULL REFERENCES classes(id) ON DELETE CASCADE,
   session_date DATE NOT NULL,
   session_time TIME NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE attendance_sessions (
 
 -- Attendance records
 CREATE TABLE attendance_records (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   session_id UUID NOT NULL REFERENCES attendance_sessions(id) ON DELETE CASCADE,
   student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
   status TEXT NOT NULL CHECK (status IN ('Attend', 'Not Attend', 'Late')),
@@ -63,7 +63,7 @@ CREATE TABLE attendance_records (
 
 -- Retroactive access grants
 CREATE TABLE retroactive_access (
-  id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   session_id UUID NOT NULL REFERENCES attendance_sessions(id) ON DELETE CASCADE,
   student_id UUID NOT NULL REFERENCES students(id) ON DELETE CASCADE,
   granted_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
