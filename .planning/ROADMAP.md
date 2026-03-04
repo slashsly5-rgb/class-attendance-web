@@ -8,6 +8,18 @@ This roadmap breaks down the development of the Class Attendance System into man
 ## Phase 1: Project Setup & Infrastructure
 **Goal**: Establish development environment, hosting, and database foundation.
 
+**Requirements:** NFR-4, NFR-5, NFR-7, FR-10
+
+**Plans:** 5 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — Initialize Next.js project with TypeScript, Tailwind, and shadcn/ui
+- [ ] 01-02-PLAN.md — Create Supabase project and obtain API credentials
+- [ ] 01-03-PLAN.md — Create database schema with migrations and configure Supabase clients
+- [ ] 01-04-PLAN.md — Set up GitHub repository and Vercel deployment pipeline
+- [ ] 01-05-PLAN.md — Verify end-to-end deployment and database connectivity
+
+
 ### Tasks
 1. Initialize Next.js project with TypeScript
 2. Set up GitHub repository
