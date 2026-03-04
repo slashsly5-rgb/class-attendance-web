@@ -2,12 +2,12 @@
 
 ## Current Status
 **Phase**: 02 - Class Management Initial Setup (In Progress)
-**Current Plan**: 2 of 3
+**Current Plan**: 3 of 3
 **Last Updated**: 2026-03-04
 
 ## Progress
 **Phase 01**: █████████████████████ 100% (1/1 plans - Complete)
-**Phase 02**: ███████░░░░░░░░░░░░░░ 33% (1/3 plans)
+**Phase 02**: ██████████████░░░░░░░ 67% (2/3 plans)
 
 ## Project Initialization
 - ✅ Git repository initialized
@@ -28,9 +28,14 @@
   - Unique class code generator using nanoid
   - Database seed file for 6 initial classes
   - Auto-fixed Zod v4 API compatibility issue
+- ✅ **Plan 02-02 Complete**: Server Actions and LocationPicker
+  - Server Actions for class CRUD operations
+  - LocationPicker component with Leaflet map integration
+  - Unique code collision retry logic (3 attempts)
+  - Leaflet marker icon fix for production builds
 
 ## Next Actions
-1. Execute Plan 02-02: Create Server Actions for class CRUD operations
+1. Execute Plan 02-03: Create lecturer UI pages for class management
 2. Continue Phase 2 implementation
 
 ## Configuration
@@ -54,6 +59,10 @@
 - Set location fields as nullable to support optional configuration during class creation
 - Default location radius set to 50 meters as reasonable initial geofence
 - Used ON CONFLICT DO NOTHING in seed.sql for safe multiple seed runs
+- Implemented 3-attempt retry logic for unique code collision handling (Postgres error code 23505)
+- Applied Leaflet marker icon fix using CDN URLs to prevent 404 in production builds
+- Set default map center to London [51.505, -0.09] when no location provided
+- Called revalidatePath before redirect in Server Actions per Next.js best practices
 
 ## Notes
 - No student authentication required for MVP
