@@ -53,6 +53,15 @@ Plans:
 ## Phase 2: Class Management & Initial Setup
 **Goal**: Enable lecturer to create and manage classes with enrollment codes.
 
+**Requirements:** FR-10
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Install dependencies and create validation foundation with Zod schemas and seed data
+- [ ] 02-02-PLAN.md — Implement Server Actions for CRUD operations and LocationPicker map component
+- [ ] 02-03-PLAN.md — Build lecturer UI (dashboard, create, detail, edit pages)
+
 ### Tasks
 1. Create Class model and database operations (CRUD)
 2. Build lecturer class creation page
