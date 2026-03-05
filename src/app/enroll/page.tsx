@@ -1,5 +1,7 @@
 import { EnrollmentForm } from '@/components/features/students/EnrollmentForm'
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import Link from 'next/link'
 
 export default function EnrollPage() {
     return (
@@ -19,6 +21,11 @@ export default function EnrollPage() {
                     </CardHeader>
                     <CardContent>
                         <EnrollmentForm />
+                        <Link href="/student" className="block mt-3">
+                            <Button variant="outline" className="w-full min-h-[44px]">
+                                Back to Student Portal
+                            </Button>
+                        </Link>
                     </CardContent>
                 </Card>
 
