@@ -41,6 +41,12 @@ export default async function EnrollSuccessPage({
                             </p>
                         </div>
 
+                        <Link href="/student" className="block w-full">
+                            <Button className="w-full min-h-[44px]">
+                                Go to Student Portal
+                            </Button>
+                        </Link>
+
                         <Link href="/enroll" className="block w-full">
                             <Button variant="outline" className="w-full min-h-[44px]">
                                 Enroll in Another Class
