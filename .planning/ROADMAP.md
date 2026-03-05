@@ -258,6 +258,15 @@ Plans:
 ## Phase 8: Lecturer Dashboard & Analytics
 **Goal**: Comprehensive dashboard showing attendance across all classes.
 
+**Requirements:** FR-7, FR-8
+
+**Plans:** 3 plans
+
+Plans:
+- [ ] 08-01-PLAN.md — Create analytics Server Actions with optimized queries and threshold utilities
+- [ ] 08-02-PLAN.md — Build analytics-enhanced dashboard with color-coded class cards
+- [ ] 08-03-PLAN.md — Create detailed class analytics page with sortable student roster
+
 ### Tasks
 1. Build main lecturer dashboard with overview cards for all 6 classes
 2. Calculate and display per class:
