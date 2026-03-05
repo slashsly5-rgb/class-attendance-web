@@ -27,19 +27,30 @@ export default async function StudentClassPage({ params }: PageProps) {
 
     const supabase = await createClient()
 
-    // 1. Verify student is actually enrolled
+    // 1. Resolve student UUID from cookie student_id (public identifier)
+    const { data: studentDoc, error: studentError } = await supabase
+        .from('students')
+        .select('id')
+        .eq('student_id', studentId)
+        .single()
+
+    if (studentError || !studentDoc) {
+        redirect('/student')
+    }
+
+    // 2. Verify student is actually enrolled
     const { data: enrollment, error: enrollError } = await supabase
         .from('enrollments')
         .select('enrolled_at')
         .eq('class_id', id)
-        .eq('student_id', studentId)
+        .eq('student_id', studentDoc.id)
         .single()
 
     if (enrollError || !enrollment) {
         redirect('/student/dashboard')
     }
 
-    // 2. Fetch Class Details
+    // 3. Fetch Class Details
     const { data: classData, error: classError } = await supabase
         .from('classes')
         .select('*')
@@ -50,7 +61,7 @@ export default async function StudentClassPage({ params }: PageProps) {
         redirect('/student/dashboard')
     }
 
-    // 3. Fetch Active Session
+    // 4. Fetch Active Session
     const pendingSessions = await getStudentPendingSessions(id, studentId)
     const activeSession = pendingSessions.length > 0 ? pendingSessions[0] : null
 
@@ -65,7 +76,7 @@ export default async function StudentClassPage({ params }: PageProps) {
             <div className="mb-8 p-6 bg-slate-50 rounded-lg border">
                 <div className="flex justify-between items-start mb-2">
                     <span className="inline-flex items-center rounded-md bg-blue-50 px-2 py-1 text-xs font-medium text-blue-700 ring-1 ring-inset ring-blue-700/10">
-                        {classData.enrollment_code}
+                        {classData.code}
                     </span>
                 </div>
                 <h1 className="text-3xl font-bold tracking-tight mb-2">{classData.name}</h1>
@@ -103,7 +114,7 @@ export default async function StudentClassPage({ params }: PageProps) {
                 <LocationVerification
                     classLat={classData.location_lat}
                     classLng={classData.location_lng}
-                    classRadius={classData.radius || 50}
+                    classRadius={classData.location_radius || 50}
                     onVerified={() => {
                         // Client side callback if needed for analytics. Next.js handles the rest.
                     }}
