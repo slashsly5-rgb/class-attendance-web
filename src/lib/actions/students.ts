@@ -2,6 +2,7 @@
 
 import { studentEnrollmentSchema } from '@/lib/validations/student'
 import { createClient } from '@/lib/supabase/server'
+import { revalidatePath } from 'next/cache'
 
 export type EnrollmentState = {
     message?: string | null
@@ -133,6 +134,23 @@ export async function enrollStudent(prevState: EnrollmentState, formData: FormDa
     }
 }
 
+export async function removeStudentFromClass(classId: string, studentUuid: string) {
+    const supabase = await createClient()
+
+    const { error } = await supabase
+        .from('enrollments')
+        .delete()
+        .eq('class_id', classId)
+        .eq('student_id', studentUuid)
+
+    if (error) {
+        throw new Error(`Failed to remove student from class: ${error.message}`)
+    }
+
+    revalidatePath(`/lecturer/classes/${classId}`)
+    revalidatePath('/lecturer')
+}
+
 export async function getStudentsByClass(classId: string) {
     const supabase = await createClient()
 
@@ -140,6 +158,7 @@ export async function getStudentsByClass(classId: string) {
     const { data, error } = await supabase
         .from('enrollments')
         .select(`
+            enrolled_at,
             students (
                 id,
                 student_id,
@@ -154,17 +173,16 @@ export async function getStudentsByClass(classId: string) {
         return []
     }
 
-    // In Supabase, joining to a single record returns the object directly or an array if it's a one-to-many
-    // Based on our schema, one enrollment has one student. The generated type might be array or single based on foreign keys.
-    // Let's flatten the array of enrollments to just array of students
     const students = data
-        .map(enrollment => {
-            // If it's an array for some reason, get the first one, otherwise use it directly
-            const s = Array.isArray(enrollment.students) ? enrollment.students[0] : enrollment.students;
-            return s;
+        .map((enrollment: any) => {
+            const s = Array.isArray(enrollment.students) ? enrollment.students[0] : enrollment.students
+            if (!s) return null
+            return {
+                ...s,
+                enrolled_at: enrollment.enrolled_at,
+            }
         })
-        .filter(student => student !== null && student !== undefined)
-        // We must cast here as Supabase's generated types for joins are notoriously tricky
+        .filter(student => student !== null)
         .sort((a: any, b: any) => a.full_name.localeCompare(b.full_name)) as any[]
 
     return students

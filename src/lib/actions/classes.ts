@@ -108,6 +108,22 @@ export async function updateClass(classId: string, prevState: any, formData: For
   redirect(`/lecturer/classes/${classId}`)
 }
 
+export async function deleteClass(classId: string) {
+  const supabase = await createClient()
+
+  const { error } = await supabase
+    .from('classes')
+    .delete()
+    .eq('id', classId)
+
+  if (error) {
+    throw new Error(`Failed to delete class: ${error.message}`)
+  }
+
+  revalidatePath('/lecturer')
+  redirect('/lecturer')
+}
+
 export async function getClasses() {
   const supabase = await createClient()
 

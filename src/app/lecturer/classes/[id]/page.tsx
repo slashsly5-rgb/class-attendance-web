@@ -1,5 +1,5 @@
-import { getClassById } from '@/lib/actions/classes'
-import { getStudentsByClass } from '@/lib/actions/students'
+import { deleteClass, getClassById } from '@/lib/actions/classes'
+import { getStudentsByClass, removeStudentFromClass } from '@/lib/actions/students'
 import { getSessionsByClass } from '@/lib/actions/attendance'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
@@ -42,6 +42,9 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
             <Link href={`/lecturer/classes/${classData.id}/edit`}>
               <Button>Edit Class</Button>
             </Link>
+            <form action={deleteClass.bind(null, classData.id)}>
+              <Button variant="destructive" type="submit">Delete Class</Button>
+            </form>
           </div>
         </div>
       </div>
@@ -124,6 +127,7 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
                   <tr>
                     <th className="px-6 py-3">Full Name</th>
                     <th className="px-6 py-3">Student ID</th>
+                    <th className="px-6 py-3">Action</th>
                     <th className="px-6 py-3 text-right">Enrollment Date</th>
                   </tr>
                 </thead>
@@ -132,8 +136,15 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
                     <tr key={student.id} className="bg-background hover:bg-muted/50">
                       <td className="px-6 py-4 font-medium">{student.full_name}</td>
                       <td className="px-6 py-4 font-mono text-muted-foreground">{student.student_id}</td>
+                      <td className="px-6 py-4">
+                        <form action={removeStudentFromClass.bind(null, classData.id, student.id)}>
+                          <Button variant="destructive" size="sm" type="submit">
+                            Remove
+                          </Button>
+                        </form>
+                      </td>
                       <td className="px-6 py-4 text-right text-muted-foreground">
-                        {new Date(student.created_at).toLocaleDateString()}
+                        {new Date(student.enrolled_at).toLocaleDateString()}
                       </td>
                     </tr>
                   ))}
