@@ -28,7 +28,16 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <div className="min-h-screen flex flex-col">
+          <div className="flex-1">
+            {children}
+          </div>
+          <footer className="border-t border-border bg-background">
+            <div className="container mx-auto px-4 py-3 text-center text-sm text-muted-foreground">
+              Created By: Dr. Rahmat Aidil Djubair
+            </div>
+          </footer>
+        </div>
         <Toaster />
       </body>
     </html>
