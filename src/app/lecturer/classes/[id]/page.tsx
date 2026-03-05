@@ -35,9 +35,14 @@ export default async function ClassDetailPage({ params }: { params: Promise<{ id
               {classData.degree_level} • {classData.semester}
             </p>
           </div>
-          <Link href={`/lecturer/classes/${classData.id}/edit`}>
-            <Button>Edit Class</Button>
-          </Link>
+          <div className="flex gap-2">
+            <Link href={`/lecturer/classes/${classData.id}/analytics`}>
+              <Button variant="secondary">View Analytics</Button>
+            </Link>
+            <Link href={`/lecturer/classes/${classData.id}/edit`}>
+              <Button>Edit Class</Button>
+            </Link>
+          </div>
         </div>
       </div>
 
