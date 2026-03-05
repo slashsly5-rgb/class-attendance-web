@@ -320,12 +320,12 @@ export async function getStudentEnrollments(studentId: string) {
             classes (
                 id,
                 name,
-                enrollment_code,
+                code,
                 degree_level,
                 semester,
                 location_lat,
                 location_lng,
-                radius
+                location_radius
             )
         `)
         .eq('student_id', studentDoc.id)
@@ -338,7 +338,14 @@ export async function getStudentEnrollments(studentId: string) {
 
     // Flatten the result
     return data.map((e: any) => ({
-        ...e.classes,
-        enrolled_at: e.enrolled_at
+        id: e.classes?.id,
+        name: e.classes?.name,
+        enrollment_code: e.classes?.code,
+        degree_level: e.classes?.degree_level,
+        semester: e.classes?.semester,
+        location_lat: e.classes?.location_lat,
+        location_lng: e.classes?.location_lng,
+        radius: e.classes?.location_radius,
+        enrolled_at: e.enrolled_at,
     }))
 }
