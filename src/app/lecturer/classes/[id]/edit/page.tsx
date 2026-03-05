@@ -17,7 +17,7 @@ const LocationPicker = dynamic(
 export default function EditClassPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = use(params)
   const [classData, setClassData] = useState<any>(null)
-  const [location, setLocation] = useState({ lat: 0, lng: 0, radius: 50 })
+  const [location, setLocation] = useState<{ lat: number | null, lng: number | null, radius: number }>({ lat: null, lng: null, radius: 50 })
 
   useEffect(() => {
     getClassById(id).then(data => {
@@ -32,12 +32,6 @@ export default function EditClassPage({ params }: { params: Promise<{ id: string
 
   const handleLocationChange = (lat: number, lng: number, radius: number) => {
     setLocation({ lat, lng, radius })
-    const latInput = document.getElementById('location_lat') as HTMLInputElement
-    const lngInput = document.getElementById('location_lng') as HTMLInputElement
-    const radiusInput = document.getElementById('location_radius') as HTMLInputElement
-    if (latInput) latInput.value = lat.toString()
-    if (lngInput) lngInput.value = lng.toString()
-    if (radiusInput) radiusInput.value = radius.toString()
   }
 
   if (!classData) {
@@ -69,9 +63,9 @@ export default function EditClassPage({ params }: { params: Promise<{ id: string
                 name: classData.name,
                 degree_level: classData.degree_level,
                 semester: classData.semester,
-                location_lat: classData.location_lat,
-                location_lng: classData.location_lng,
-                location_radius: classData.location_radius
+                location_lat: location.lat,
+                location_lng: location.lng,
+                location_radius: location.radius
               }}
               submitLabel="Update Class"
             />
@@ -85,9 +79,9 @@ export default function EditClassPage({ params }: { params: Promise<{ id: string
           </CardHeader>
           <CardContent>
             <LocationPicker
-              initialLat={location.lat}
-              initialLng={location.lng}
-              initialRadius={location.radius}
+              initialLat={classData.location_lat || 0}
+              initialLng={classData.location_lng || 0}
+              initialRadius={classData.location_radius || 50}
               onLocationChange={handleLocationChange}
             />
           </CardContent>

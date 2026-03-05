@@ -15,17 +15,9 @@ const LocationPicker = dynamic(
 )
 
 export default function NewClassPage() {
-  const [location, setLocation] = useState({ lat: 0, lng: 0, radius: 50 })
-
+  const [location, setLocation] = useState<{ lat: number | null, lng: number | null, radius: number }>({ lat: null, lng: null, radius: 50 })
   const handleLocationChange = (lat: number, lng: number, radius: number) => {
     setLocation({ lat, lng, radius })
-    // Update hidden form fields
-    const latInput = document.getElementById('location_lat') as HTMLInputElement
-    const lngInput = document.getElementById('location_lng') as HTMLInputElement
-    const radiusInput = document.getElementById('location_radius') as HTMLInputElement
-    if (latInput) latInput.value = lat.toString()
-    if (lngInput) lngInput.value = lng.toString()
-    if (radiusInput) radiusInput.value = radius.toString()
   }
 
   return (
@@ -47,7 +39,12 @@ export default function NewClassPage() {
           <CardContent>
             <ClassForm
               action={createClass}
-              defaultValues={{ semester: 'Semester 2 2025/2026' }}
+              defaultValues={{
+                semester: 'Semester 2 2025/2026',
+                location_lat: location.lat,
+                location_lng: location.lng,
+                location_radius: location.radius
+              }}
               submitLabel="Create Class"
             />
           </CardContent>
@@ -60,8 +57,8 @@ export default function NewClassPage() {
           </CardHeader>
           <CardContent>
             <LocationPicker
-              initialLat={location.lat}
-              initialLng={location.lng}
+              initialLat={location.lat || 0}
+              initialLng={location.lng || 0}
               initialRadius={location.radius}
               onLocationChange={handleLocationChange}
             />

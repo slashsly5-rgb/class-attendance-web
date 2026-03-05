@@ -89,19 +89,19 @@ export function ClassForm({ action, defaultValues, submitLabel }: ClassFormProps
         type="hidden"
         name="location_lat"
         id="location_lat"
-        defaultValue={defaultValues?.location_lat ?? ''}
+        value={defaultValues?.location_lat ?? ''}
       />
       <input
         type="hidden"
         name="location_lng"
         id="location_lng"
-        defaultValue={defaultValues?.location_lng ?? ''}
+        value={defaultValues?.location_lng ?? ''}
       />
       <input
         type="hidden"
         name="location_radius"
         id="location_radius"
-        defaultValue={defaultValues?.location_radius ?? 50}
+        value={defaultValues?.location_radius ?? 50}
       />
 
       <SubmitButton label={submitLabel} />
