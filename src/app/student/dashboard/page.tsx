@@ -42,9 +42,9 @@ export default async function StudentDashboardPage() {
                         Welcome back, {studentId}
                     </p>
                 </div>
-                <form action="/student/classes/enroll" method="GET">
-                    <Button variant="outline" type="submit">Enroll in Class</Button>
-                </form>
+                <Link href="/enroll">
+                    <Button variant="outline" type="button">Enroll in Class</Button>
+                </Link>
             </div>
 
             {classesWithStatus.length === 0 ? (

@@ -32,11 +32,11 @@ export default function Home() {
           </Link>
 
           <Link
-            href="/student/dashboard"
+            href="/enroll"
             className="group flex h-16 w-full items-center justify-center gap-3 rounded-xl border-2 border-zinc-200 bg-white px-6 text-lg font-medium text-zinc-900 transition-all hover:border-zinc-300 hover:bg-zinc-50 hover:scale-105 active:scale-95 dark:border-zinc-800 dark:bg-zinc-950 dark:text-white dark:hover:border-zinc-700 dark:hover:bg-zinc-900 sm:w-[240px]"
           >
             <GraduationCap className="h-6 w-6 transition-transform group-hover:-translate-y-1" />
-            Student Portal
+            Student Enroll
           </Link>
         </div>
 
